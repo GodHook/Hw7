@@ -8,13 +8,14 @@ window.addEventListener("load", function() {
 });
 
 document.querySelector("#play").addEventListener("click", function() {
-  if (video.paused) {  // if statment to check 
-    video.play();
-    console.log("Play Video");
-  } else {
-    video.pause();
-    console.log("Pause Video");
-  }
+  console.log("Play Video");
+  video.play();
+});
+
+// Add event listener for pause button
+document.querySelector("#pause").addEventListener("click", function() {
+  console.log("Pause Video");
+  video.pause();
 });
 
 document.querySelector("#load").addEventListener("click", function() {
