@@ -1,15 +1,23 @@
-var video = document.querySelector("video");
-var speed = 1; // The speed should be  1  i think
-var muted = false; // muted volume
-var volume = 1; // Initial volume, where 1 is 100%
+// var video = document.getElementById("player1");
+// var speed = 1; // The speed should be  1  i think
+// var muted = false; // muted volume
+// var volume = 1; // Initial volume, where 1 is 100%
+
+const video = document.querySelector("#player1");
 
 window.addEventListener("load", function() {
   console.log("Good job opening the window");
+
+  video.autoplay = false;
+  video.pause();
+  video.loop = false;
+  video.volume = document.querySelector("#slider").value/100;
 });
 
 document.querySelector("#play").addEventListener("click", function() {
   console.log("Play Video");
   video.play();
+  document.querySelector("#volume").textContent = Math.round(video.volume*100) +"%";
 });
 
 // Add event listener for pause button
@@ -19,40 +27,50 @@ document.querySelector("#pause").addEventListener("click", function() {
 });
 
 document.querySelector("#load").addEventListener("click", function() {
-  video.load();
+  video.autoplay = false;
+  video.pause();
+  video.loop = false;
+  video.volume = document.querySelector("#slider").value/100;
   console.log("Reload Video");
 });
 
 document.querySelector("#slow").addEventListener("click", function() {
-  speed -= 0.1; // #slow is used here to  dcrease speed by 10%
-  video.playbackRate = speed;
-  console.log("Video Speed: " + (speed * 100) + "%");
+  video.playbackRate *= 0.9;
+  video.playbackRate -= 0.1;
+  console.log("New speed is " + video.playbackRate);
 });
 
-document.querySelector("#speed").addEventListener("click", function() {
-  speed += 0.1; // Increase speed by 10%
-  video.playbackRate = speed;
-  console.log("Video Speed: " + (speed * 100) + "%");
+document.querySelector("#faster").addEventListener("click", function() {
+ 
+  video.playbackRate /=0.9;
+  console.log("New speed is " + video.playbackRate);
+
 });
 
 document.querySelector("#skip").addEventListener("click", function() {
-  var currentTime = video.currentTime;
-  var newTime = currentTime + 10; // This will skip ahead 10 seconds
-  if (newTime > video.duration) {
-    newTime = 0; // Restart if the video length is exceeded
-  }
-  video.currentTime = newTime;
-  console.log("Current Video Location: " + newTime + " seconds");
+  if(video.currentTime + 10< video.duration) {
+    video.currentTime = 0;
+  }else{
+    video.currentTime += 10;
+  };
+
+
+  
+  // This will skip ahead 10 seconds
+
+  console.log("Current location is " + videocurrentTime);
+
 });
+
+
 // Check if the video is muted and unmuted 
 document.querySelector("#mute").addEventListener("click", function() {
-  if (!muted) {
-    video.muted = true;
-    muted = true;
-    console.log("Video Muted");
+  if (video.muted) {
+    video.muted = false;;
+    this.textcontent = false;
   } else {
-    video.muted = false;
-    muted = false;
+    video.muted =true;
+    this.textcontent =  "Unmute"
     console.log("Video Unmuted");
   }
 });
